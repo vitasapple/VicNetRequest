@@ -85,3 +85,5 @@ if (isShowLoding==YES) {
         NSLog(@"收到数据后调用到我了");
     };
    ```
+   **更多用法，如上传下载清理缓存请参看demo**
+   **[我的博客](https://juejin.im/user/5a3b31456fb9a045167d5b7c/posts)**
