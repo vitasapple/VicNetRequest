@@ -88,3 +88,5 @@ if (isShowLoding==YES) {
    **更多用法，如上传下载清理缓存请参看demo**
  
    **[我的博客](https://juejin.im/user/5a3b31456fb9a045167d5b7c/posts)**
+   
+  不足之处欢迎吐槽指导，star更好2333 
