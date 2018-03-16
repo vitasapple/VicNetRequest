@@ -85,6 +85,10 @@ if (isShowLoding==YES) {
         NSLog(@"收到数据后调用到我了");
     };
    ```
+   **针对某些后台需要你将key，value全部转为字符串发送到后台，这个比较坑，AFN我暂时不知道如何做，目前封装的是系统方法，有知道的童鞋请告知**
+   ```
+   -(void)startRequestStringByPostWithSuccess:(SuccessBlock)successBlock Fail:(FailBlock)failBlock;
+   ```
    **更多用法，如上传下载清理缓存请参看demo**
  
    **[我的博客](https://juejin.im/user/5a3b31456fb9a045167d5b7c/posts)**
