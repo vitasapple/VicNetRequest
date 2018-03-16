@@ -32,13 +32,11 @@
 ## 用法
 日志：2018-03-15 1.0尚未接入HUD，后续会补上，但是在代码内已经写好了，你只需要在if内写入你的HUD代码即可，具体如下(以SVProgressHUD为例)
 ```
-//开始发送请求前
-if (isShowLoding==YES) {
-        [SVProgressHUD show];
-    }
-    
-//收到后台返回数据后
-if (isShowLoding==YES) {
+#pragma mark 你的HUD代码
+-(void)showYourHud{
+    [SVProgressHUD show];
+}
+-(void)dismissYourHud{
     [SVProgressHUD dismiss];
 }
 ```

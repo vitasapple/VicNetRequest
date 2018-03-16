@@ -210,13 +210,13 @@
     };
 }
 
-
+#pragma mark 请求实现代码
 -(void)startRequestWithCache:(CacheDicBlock)cacheBackBlock Success:(SuccessBlock)successBlock Fail:(FailBlock)failBlock{
     NSAssert(self.method != 0, @"请求方法不能为空");
     NSAssert(self.urlStr.length >0, @"请求url不能为空");
     NSAssert(self.cacheInput ==666, @"缓存不能为空");
     if (self.isShowHud==YES) {
-        
+        [self showYourHud];
     }
     NSString *cacheKey = _urlStr;
     if (_paraDic && _isCache==YES) {
@@ -232,7 +232,7 @@
     NSAssert(self.urlStr.length >0, @"请求url不能为空");
     _isCache = NO;//防止用户调用此无缓存的方法又使用了缓存block
     if (self.isShowHud==YES) {
-        
+        [self showYourHud];
     }
     [self requesByAFNWithCacheKey:nil success:successBlock Fail:failBlock];
 }
@@ -240,6 +240,7 @@
     NSAssert(self.method == 2, @"请求方法必须为post");
     NSAssert(self.urlStr.length >0, @"请求url不能为空");
     if (_isShowHud==YES) {
+        [self showYourHud];
     }
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:_urlStr]];
     request.HTTPMethod = @"POST";
@@ -249,6 +250,7 @@
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        [self dismissYourHud];
         if (!error) {
             NSDictionary *dict = [self objToDic:data];
             successBlock(dict);
@@ -267,7 +269,7 @@
                     
                 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                     if (_isShowHud==YES) {
-                        
+                        [self dismissYourHud];
                     }
                     NSDictionary * dict = [self objToDic:responseObject];
                     if (_isCache == YES) {
@@ -281,7 +283,7 @@
                     successBlock(dict);
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                     if (_isShowHud==YES) {
-                        
+                        [self dismissYourHud];
                     }
                     failBlock(error);
                 }];
@@ -291,7 +293,7 @@
                     // 获取到目前的数据请求的进度
                 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                     if (_isShowHud==YES) {
-                        
+                        [self dismissYourHud];
                     }
                     NSDictionary * dict = [self objToDic:responseObject];
                     if (_isCache == YES) {
@@ -305,7 +307,7 @@
                     successBlock(dict);
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                     if (_isShowHud==YES) {
-                        
+                        [self dismissYourHud];
                     }
                     failBlock(error);
                 }];
@@ -313,7 +315,7 @@
             case PUT:{
                 [manager PUT:_urlStr parameters:_paraDic success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                     if (_isShowHud==YES) {
-                        
+                        [self dismissYourHud];
                     }
                     NSDictionary * dict = [self objToDic:responseObject];
                     if (_isCache == YES) {
@@ -327,7 +329,7 @@
                     successBlock(dict);
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                     if (_isShowHud==YES) {
-                        
+                        [self dismissYourHud];
                     }
                     failBlock(error);
                 }];
@@ -335,7 +337,7 @@
             case DELETE:{
                 [manager DELETE:_urlStr parameters:_paraDic success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                     if (_isShowHud==YES) {
-                        
+                        [self dismissYourHud];
                     }
                     NSDictionary * dict = [self objToDic:responseObject];
                     if (_isCache == YES) {
@@ -349,7 +351,7 @@
                     successBlock(dict);
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                     if (_isShowHud==YES) {
-                        
+                        [self dismissYourHud];
                     }
                     failBlock(error);
                 }];
@@ -364,7 +366,7 @@
     NSAssert(self.urlStr.length >0, @"请求url不能为空");
     AFHTTPSessionManager *manager = [self returnManager];
     if (_isShowHud == YES) {
-        
+        [self showYourHud];
     }
     
     [manager POST:_urlStr parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
@@ -374,11 +376,13 @@
         _progressBlock ? _progressBlock(uploadProgress) : nil;
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (_isShowHud == YES) {
+            [self dismissYourHud];
         }
         NSDictionary *dict = [self objToDic:responseObject];
         successBlock(dict);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (_isShowHud == YES) {
+            [self dismissYourHud];
         }
         failBlock ? failBlock(error) : nil;
     }];
@@ -386,14 +390,14 @@
 -(NSURLSessionTask *)startDownLoadWithSuccess:(void(^)(NSString *filePath))successBlock Fail:(FailBlock)failBlock{
     AFHTTPSessionManager *manager = [self returnManager];
     if (_isShowHud == YES) {
-        
+        [self showYourHud];
     }
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_urlStr]];
     NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
         _progressBlock ? _progressBlock(downloadProgress) : nil;
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         if (_isShowHud == YES) {
-            
+            [self dismissYourHud];
         }
         NSString *downloadDir = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:_downDirStr ? _downDirStr : @"VicNetworkHelper"];
         NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -402,7 +406,7 @@
         return [NSURL fileURLWithPath:filePath];
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
         if (_isShowHud == YES) {
-            
+            [self dismissYourHud];
         }
         successBlock ? successBlock(filePath.absoluteString /** NSURL->NSString*/) : nil;
         failBlock && error ? failBlock(error) : nil;
@@ -410,6 +414,7 @@
     [downloadTask resume];
     return downloadTask;
 }
+#pragma mark 网络监控
 +(void)AFNetMonitorNet:(NetStateBlock)netBlock{
     AFNetworkReachabilityManager *mgr = [AFNetworkReachabilityManager sharedManager];
     [mgr startMonitoring];
@@ -417,6 +422,7 @@
         netBlock(status);//0,-1表示无网络
     }];
 }
+#pragma mark AFHTTPSessionManager创建
 -(AFHTTPSessionManager *)returnManager{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -425,6 +431,14 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",@"multipart/form-data", nil];
     return manager;
 }
+#pragma mark 你的HUD代码
+-(void)showYourHud{
+    
+}
+-(void)dismissYourHud{
+    
+}
+#pragma mark 工具代码
 -(NSString *)convertJsonStringFromDictionaryOrArray:(id)parameter {
     NSData *data = [NSJSONSerialization dataWithJSONObject:parameter options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
@@ -434,6 +448,7 @@
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:obj options:NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves error:nil];
     return dict;
 }
+#pragma mark 清理缓存
 +(void)cleanCacheAll{
     [VicNetCache removeAllResponseCache];
 }
