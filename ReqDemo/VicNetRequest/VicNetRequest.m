@@ -268,98 +268,59 @@
                 [manager GET:_urlStr parameters:_paraDic progress:^(NSProgress * _Nonnull downloadProgress) {
                     
                 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                    if (_isShowHud==YES) {
-                        [self dismissYourHud];
-                    }
-                    NSDictionary * dict = [self objToDic:responseObject];
-                    if (_isCache == YES) {
-                        [VicNetCache saveResponseCache:dict forKey:cacheKey];
-                    }
-                    if (self.addInNetBlock) {
-                        /**默认空返回有需要添加相应的参数即可
-                         */
-                        self.addInNetBlock();
-                    }
-                    successBlock(dict);
+                    [self successRespWithSuccessBolck:successBlock andObj:responseObject cacheKey:cacheKey];
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                    if (_isShowHud==YES) {
-                        [self dismissYourHud];
-                    }
-                    failBlock(error);
+                    [self failRespWithFailBlock:failBlock andError:error];
                 }];
             }break;
             case POST:{
                 [manager POST:_urlStr parameters:_paraDic progress:^(NSProgress * _Nonnull uploadProgress) {
                     // 获取到目前的数据请求的进度
                 } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                    if (_isShowHud==YES) {
-                        [self dismissYourHud];
-                    }
-                    NSDictionary * dict = [self objToDic:responseObject];
-                    if (_isCache == YES) {
-                        [VicNetCache saveResponseCache:dict forKey:cacheKey];
-                    }
-                    if (self.addInNetBlock) {
-                        /**默认空返回有需要添加相应的参数即可
-                         */
-                        self.addInNetBlock();
-                    }
-                    successBlock(dict);
+                    [self successRespWithSuccessBolck:successBlock andObj:responseObject cacheKey:cacheKey];
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                    if (_isShowHud==YES) {
-                        [self dismissYourHud];
-                    }
-                    failBlock(error);
+                    [self failRespWithFailBlock:failBlock andError:error];
                 }];
             }break;
             case PUT:{
                 [manager PUT:_urlStr parameters:_paraDic success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                    if (_isShowHud==YES) {
-                        [self dismissYourHud];
-                    }
-                    NSDictionary * dict = [self objToDic:responseObject];
-                    if (_isCache == YES) {
-                        [VicNetCache saveResponseCache:dict forKey:cacheKey];
-                    }
-                    if (self.addInNetBlock) {
-                        /**默认空返回有需要添加相应的参数即可
-                         */
-                        self.addInNetBlock();
-                    }
-                    successBlock(dict);
+                    [self successRespWithSuccessBolck:successBlock andObj:responseObject cacheKey:cacheKey];
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                    if (_isShowHud==YES) {
-                        [self dismissYourHud];
-                    }
-                    failBlock(error);
+                    [self failRespWithFailBlock:failBlock andError:error];
                 }];
             }break;
             case DELETE:{
                 [manager DELETE:_urlStr parameters:_paraDic success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                    if (_isShowHud==YES) {
-                        [self dismissYourHud];
-                    }
-                    NSDictionary * dict = [self objToDic:responseObject];
-                    if (_isCache == YES) {
-                        [VicNetCache saveResponseCache:dict forKey:cacheKey];
-                    }
-                    if (self.addInNetBlock) {
-                        /**默认空返回有需要添加相应的参数即可
-                         */
-                        self.addInNetBlock();
-                    }
-                    successBlock(dict);
+                    [self successRespWithSuccessBolck:successBlock andObj:responseObject cacheKey:cacheKey];
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                    if (_isShowHud==YES) {
-                        [self dismissYourHud];
-                    }
-                    failBlock(error);
+                    [self failRespWithFailBlock:failBlock andError:error];
                 }];
             }break;
             default:
                 break;
         }
     }
+}
+-(void)successRespWithSuccessBolck:(SuccessBlock)successBlock andObj:(id _Nullable)responseObject cacheKey:(NSString*)cacheKey{
+    if (_isShowHud==YES) {
+        [self dismissYourHud];
+    }
+    NSDictionary * dict = [self objToDic:responseObject];
+    if (_isCache == YES) {
+        [VicNetCache saveResponseCache:dict forKey:cacheKey];
+    }
+    if (self.addInNetBlock) {
+        /**默认空返回有需要添加相应的参数即可
+         */
+        self.addInNetBlock();
+    }
+    successBlock(dict);
+}
+-(void)failRespWithFailBlock:(FailBlock)failBlock andError:(NSError * _Nonnull)error{
+    if (_isShowHud==YES) {
+        [self dismissYourHud];
+    }
+    failBlock(error);
 }
 -(void)startUploadWithSuccess:(SuccessBlock)successBlock Fail:(FailBlock)failBlock{
     NSAssert(self.method == 2, @"请求方法必须为post");
