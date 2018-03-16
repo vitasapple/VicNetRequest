@@ -98,11 +98,7 @@
 				12B0AC9E205911B800462985 /* AppDelegate.m */,
 				12B0ACA0205911B800462985 /* ViewController.h */,
 				12B0ACA1205911B800462985 /* ViewController.m */,
-				12FC3F942059FAC7006E233D /* VicNetRequest.h */,
-				12FC3F952059FAC7006E233D /* VicNetRequest.m */,
-				12FC3FA7205A1A59006E233D /* VicNetCache.h */,
-				12FC3FA8205A1A5A006E233D /* VicNetCache.m */,
-				12FC3F9B205A1A49006E233D /* PINCache */,
+				12E8A85B205B483500D444A7 /* VicNetRequest */,
 				12FC3F802059F957006E233D /* AFNetworking */,
 				12B0ACA6205911BC00462985 /* Assets.xcassets */,
 				12B0ACAB205911BC00462985 /* Info.plist */,
@@ -111,6 +107,18 @@
 				12B0ACAC205911BC00462985 /* main.m */,
 			);
 			path = ReqDemo;
+			sourceTree = "<group>";
+		};
+		12E8A85B205B483500D444A7 /* VicNetRequest */ = {
+			isa = PBXGroup;
+			children = (
+				12FC3F942059FAC7006E233D /* VicNetRequest.h */,
+				12FC3F952059FAC7006E233D /* VicNetRequest.m */,
+				12FC3FA7205A1A59006E233D /* VicNetCache.h */,
+				12FC3FA8205A1A5A006E233D /* VicNetCache.m */,
+				12FC3F9B205A1A49006E233D /* PINCache */,
+			);
+			path = VicNetRequest;
 			sourceTree = "<group>";
 		};
 		12FC3F802059F957006E233D /* AFNetworking */ = {
