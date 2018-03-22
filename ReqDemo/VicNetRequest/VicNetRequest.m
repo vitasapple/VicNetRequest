@@ -305,7 +305,7 @@
     if (_isShowHud==YES) {
         [self dismissYourHud];
     }
-    NSDictionary * dict = [self objToDic:responseObject];
+    NSDictionary * dict = (NSDictionary*)responseObject;
     if (_isCache == YES) {
         [VicNetCache saveResponseCache:dict forKey:cacheKey];
     }
@@ -339,8 +339,7 @@
         if (_isShowHud == YES) {
             [self dismissYourHud];
         }
-        NSDictionary *dict = [self objToDic:responseObject];
-        successBlock(dict);
+        successBlock(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (_isShowHud == YES) {
             [self dismissYourHud];
@@ -385,19 +384,25 @@
 }
 #pragma mark AFHTTPSessionManager创建
 -(AFHTTPSessionManager *)returnManager{
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    manager.requestSerializer.timeoutInterval = 60;
-    manager.requestSerializer.cachePolicy = NSURLCacheStorageNotAllowed;
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",@"multipart/form-data", nil];
+    static AFHTTPSessionManager *manager = NULL;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@""] sessionConfiguration:sessionConfiguration];
+        manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
+        manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        manager.requestSerializer.timeoutInterval = 20.0f;
+        manager.requestSerializer.cachePolicy = NSURLCacheStorageNotAllowed;
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
+    });
     return manager;
 }
 #pragma mark 你的HUD代码
 -(void)showYourHud{
-    
+    [SVProgressHUD show];
 }
 -(void)dismissYourHud{
-    
+    [SVProgressHUD dismiss];
 }
 #pragma mark 工具代码
 -(NSString *)convertJsonStringFromDictionaryOrArray:(id)parameter {
@@ -414,3 +419,4 @@
     [VicNetCache removeAllResponseCache];
 }
 @end
+
