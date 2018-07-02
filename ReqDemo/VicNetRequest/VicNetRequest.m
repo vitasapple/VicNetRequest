@@ -8,7 +8,8 @@
 
 #import "VicNetRequest.h"
 #import "AFNetworking.h"
-
+#import "ShelterView.h"
+#import "VicToastView.h"
 @implementation VicNetRequest
 +(instancetype)shareManager{
     VicNetRequest * w = [[VicNetRequest alloc]init];
@@ -399,10 +400,10 @@
 }
 #pragma mark 你的HUD代码
 -(void)showYourHud{
-    [SVProgressHUD show];
+    [VicToastView showToastWithMsg:@"请求开始了" andSuperView:[ShelterView shareView]];
 }
 -(void)dismissYourHud{
-    [SVProgressHUD dismiss];
+    [ShelterView dismiss];
 }
 #pragma mark 工具代码
 -(NSString *)convertJsonStringFromDictionaryOrArray:(id)parameter {

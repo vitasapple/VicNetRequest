@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1272215320E9C17A00F8749D /* ShelterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1272215220E9C17A00F8749D /* ShelterView.m */; };
+		1272215720E9C27700F8749D /* VicToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1272215620E9C27700F8749D /* VicToastView.m */; };
 		12B0AC9F205911B800462985 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 12B0AC9E205911B800462985 /* AppDelegate.m */; };
 		12B0ACA2205911B800462985 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12B0ACA1205911B800462985 /* ViewController.m */; };
 		12B0ACA5205911BC00462985 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12B0ACA3205911BC00462985 /* Main.storyboard */; };
@@ -27,6 +29,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1272215120E9C17A00F8749D /* ShelterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelterView.h; sourceTree = "<group>"; };
+		1272215220E9C17A00F8749D /* ShelterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelterView.m; sourceTree = "<group>"; };
+		1272215520E9C27700F8749D /* VicToastView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VicToastView.h; sourceTree = "<group>"; };
+		1272215620E9C27700F8749D /* VicToastView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VicToastView.m; sourceTree = "<group>"; };
 		12B0AC9A205911B800462985 /* ReqDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReqDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12B0AC9D205911B800462985 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		12B0AC9E205911B800462985 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -75,6 +81,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1272215020E9C16800F8749D /* ShelterView */ = {
+			isa = PBXGroup;
+			children = (
+				1272215120E9C17A00F8749D /* ShelterView.h */,
+				1272215220E9C17A00F8749D /* ShelterView.m */,
+			);
+			path = ShelterView;
+			sourceTree = "<group>";
+		};
+		1272215420E9C26000F8749D /* toast */ = {
+			isa = PBXGroup;
+			children = (
+				1272215520E9C27700F8749D /* VicToastView.h */,
+				1272215620E9C27700F8749D /* VicToastView.m */,
+			);
+			path = toast;
+			sourceTree = "<group>";
+		};
 		12B0AC91205911B800462985 = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +140,8 @@
 				12FC3F952059FAC7006E233D /* VicNetRequest.m */,
 				12FC3FA7205A1A59006E233D /* VicNetCache.h */,
 				12FC3FA8205A1A5A006E233D /* VicNetCache.m */,
+				1272215420E9C26000F8749D /* toast */,
+				1272215020E9C16800F8749D /* ShelterView */,
 				12FC3F9B205A1A49006E233D /* PINCache */,
 			);
 			path = VicNetRequest;
@@ -228,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				12FC3F902059F957006E233D /* AFSecurityPolicy.m in Sources */,
+				1272215720E9C27700F8749D /* VicToastView.m in Sources */,
 				12FC3F922059F957006E233D /* AFURLResponseSerialization.m in Sources */,
 				12B0ACA2205911B800462985 /* ViewController.m in Sources */,
 				12FC3FA5205A1A4A006E233D /* PINDiskCache.m in Sources */,
@@ -237,6 +264,7 @@
 				12FC3F962059FAC7006E233D /* VicNetRequest.m in Sources */,
 				12FC3F932059F957006E233D /* AFURLSessionManager.m in Sources */,
 				12B0AC9F205911B800462985 /* AppDelegate.m in Sources */,
+				1272215320E9C17A00F8749D /* ShelterView.m in Sources */,
 				12FC3F8F2059F957006E233D /* AFNetworkReachabilityManager.m in Sources */,
 				12FC3FA9205A1A5A006E233D /* VicNetCache.m in Sources */,
 				12FC3F912059F957006E233D /* AFURLRequestSerialization.m in Sources */,
